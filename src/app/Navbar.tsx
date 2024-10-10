@@ -22,6 +22,9 @@ const  Navbar: React.FC = async () => {
           )}
           {session ? (
             <>
+              <Link href="/project" className="hover:text-gray-300">
+                Create Project
+              </Link>
               <span>{session.user.email}</span>
               <LogoutButton/>
             </>

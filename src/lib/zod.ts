@@ -1,4 +1,4 @@
-import { object, string } from "zod"
+import { object, string, z } from "zod"
  
 export const loginSchema = object({
   email: string({ required_error: "Email is required" })
@@ -22,3 +22,15 @@ export const RegisterSchema = object({
       .min(1, "Name is required")
       .max(32, "Name must be less than 32 characters"),
   })
+
+  export const ProjectSchema = z.object({
+    name: z.string().min(3, "El nombre del proyecto debe tener al menos 3 caracteres"),
+  });
+  
+  export const TaskSchema = z.object({
+    title: z.string().min(3, "El título de la tarea debe tener al menos 3 caracteres"),
+    description: z.string().optional(),
+    projectId: z.string(),
+    assignedToId: z.number().optional(),
+    status: z.enum(["pending", "in_progress", "completed"]),
+  });
