@@ -1,3 +1,4 @@
+import Navbar from "@/app/Navbar";
 import { auth } from "../../../../auth";
 import LogoutButton from "@/components/logout-button";
 
@@ -12,6 +13,7 @@ const AdminPage = async () => {
 
   return (
     <div className="container">
+      <Navbar/>
       <pre>{JSON.stringify(session, null, 2)}</pre>
       <LogoutButton />
     </div>

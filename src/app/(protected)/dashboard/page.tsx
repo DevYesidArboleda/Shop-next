@@ -1,5 +1,6 @@
 import LogoutButton from "@/components/logout-button"
 import { auth } from "../../../../auth"
+import Navbar from "@/app/Navbar"
  
 export default async function DashboardPage() {
   const session = await auth()
@@ -10,6 +11,7 @@ export default async function DashboardPage() {
  
   return (
     <div className="container">
+      <Navbar/>
       <pre>{JSON.stringify(session, null, 2)}</pre>
       <LogoutButton/>
     </div>
