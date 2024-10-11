@@ -17,16 +17,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { loginAction } from "../../actions/auth-action";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const FormLogin = ({
-  isVerified,
-}:{
-  isVerified : boolean;
-}
-  
-) => {
-
-  const [error, setError] = useState< string | null>(null)
+const FormLogin = ({ isVerified }: { isVerified: boolean }) => {
+  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -39,10 +33,9 @@ const FormLogin = ({
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    
     startTransition(async () => {
-      const response = await loginAction(values)
-      console.log(response)
+      const response = await loginAction(values);
+      console.log(response);
       if (response.error) {
         setError(response.error);
       } else {
@@ -52,9 +45,11 @@ const FormLogin = ({
   }
 
   return (
-    <div className="flex items-center justify-center w-screen min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center w-screen min-h-screen bg-gray-100 flex-col gap-4">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h1>
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Login
+        </h1>
         {isVerified && (
           <p className="text-center text-green-500 mb-5 text-sm">
             Email verified, you can now login
@@ -98,17 +93,26 @@ const FormLogin = ({
                 </FormItem>
               )}
             />
-            {error && <FormMessage className="text-red-500">{error}</FormMessage>}
+            {error && (
+              <FormMessage className="text-red-500">{error}</FormMessage>
+            )}
             <Button
               type="submit"
               disabled={isPending}
-              className={`w-full py-2 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${isPending ? 'opacity-50' : ''}`}
+              className={`w-full py-2 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+                isPending ? "opacity-50" : ""
+              }`}
             >
               {isPending ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>
-      </div>
+      </div>    
+      <div>
+        <Link href={`/register`} className="text-blue-500 underline">
+          Register
+        </Link>
+      </div>  
     </div>
   );
 };
