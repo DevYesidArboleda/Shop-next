@@ -1,6 +1,5 @@
 import { db } from '@/lib/db';
 import EditProjectForm from '@/components/EditProjectForm';
-import { Project } from '@/types';
 import { notFound } from 'next/navigation';
 
 interface EditProjectPageProps {
