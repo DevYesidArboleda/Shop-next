@@ -13,7 +13,7 @@ export default async function ProjectPage() {
   return (
     <div className="container">
       <Navbar/>
-      <pre>{JSON.stringify(session, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(session, null, 2)}</pre> */}
       <FormProject/>
     </div>
   )

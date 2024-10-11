@@ -62,7 +62,23 @@ const FormProject = () => {
             )}
           />
 
-          
+        <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Task Description"
+                    type="text"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {error && <FormMessage>{error}</FormMessage>}
           <Button type="submit" disabled={isPending}>

@@ -105,6 +105,7 @@ export const createProjectAction = async(
     const project =await db.project.create({
       data: {
         name: data.name,
+        description: data.description,
         ownerId : user?.id 
       },
     });
@@ -147,5 +148,107 @@ export const createTaskAction = async(
     return { success: true };
   } catch (error) {
     return { error: "Error creando la tarea" };
+  }
+};
+
+export const updateProjectAction = async (
+  projectId: string,
+  values: z.infer<typeof ProjectSchema>
+) => {
+  
+  const session = await auth()
+
+  const { data, success } = ProjectSchema.safeParse(values);
+  if (!success) {
+    return { error: "Datos inválidos" };
+  }
+
+  try {
+    const user = await db.user.findUnique({
+      where: { 
+        email: session?.user.email 
+      },
+    });
+
+    if (!user) {
+      return { error: "Usuario no encontrado" };
+    }
+
+    const project = await db.project.findUnique({
+      where: { id: projectId },
+    });
+
+    if (!project) {
+      return { error: "Proyecto no encontrado" };
+    }
+
+    if (project.ownerId !== user.id) {
+      return { error: "No tienes permiso para editar este proyecto" };
+    }
+
+    const updatedProject = await db.project.update({
+      where: { id: projectId },
+      data: {
+        name: data.name,
+        description: data.description,
+      },
+    });
+
+    return { success: true, project: updatedProject };
+  } catch (error) {
+    console.error("Error actualizando el proyecto:", error);
+    return { error: "Error actualizando el proyecto" };
+  }
+};
+
+export const updateTaskAction = async (
+  taskId: string,
+  values: z.infer<typeof TaskSchema>
+) => {
+  
+
+  const { data, success } = TaskSchema.safeParse(values);
+  if (!success) {
+    return { error: "Datos inválidos" };
+  }
+
+  const session = await auth()
+
+  try {
+    const user = await db.user.findUnique({
+      where: { 
+        email: session?.user.email 
+      },
+    });
+    if (!user) {
+      return { error: "Usuario no encontrado" };
+    }
+
+    const task = await db.task.findUnique({
+      where: { id: taskId },
+      include: { project: true },
+    });
+
+    if (!task) {
+      return { error: "Tarea no encontrada" };
+    }
+
+    if (task.project.ownerId !== user.id && task.assigneeId !== user.id) {
+      return { error: "No tienes permiso para editar esta tarea" };
+    }
+
+    const updatedTask = await db.task.update({
+      where: { id: taskId },
+      data: {
+        title: data.title,
+        description: data.description,
+        status: data.status,
+      },
+    });
+
+    return { success: true, task: updatedTask };
+  } catch (error) {
+    console.error("Error actualizando la tarea:", error);
+    return { error: "Error actualizando la tarea" };
   }
 };

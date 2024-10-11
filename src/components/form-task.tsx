@@ -48,7 +48,7 @@ const FormCreateTask: React.FC<any> = () => {
       if (response.error) {
         setError(response.error);
       } else {
-        router.push(`/projects?projectID${project_id}`);
+        router.push(`/dashboard`);
       }
     });
   }

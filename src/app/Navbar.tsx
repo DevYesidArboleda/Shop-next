@@ -11,8 +11,8 @@ const  Navbar: React.FC = async () => {
         <Link href="/" className="text-xl font-bold pr-3">
           Project Manager
         </Link>
-        <div className="space-x-4">
-          <Link href="/dashboard" className="hover:text-gray-300">
+        <div className="space-x-4 sm:flex grid justify-start items-start">
+          <Link href="/dashboard" className="hover:text-gray-300 ml-4">
             Dashborad
           </Link>
           {session?.user.role === 'admin' && (
