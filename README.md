@@ -127,5 +127,5 @@ pm2 start npm --name "your_app_name" -- run start
 pm2 save
 
 Agrega el siguiente contenido al archivo:
-
+![mermaid-ai-diagram-2024-10-11-083816](https://github.com/user-attachments/assets/463b86f2-b716-45f1-a8c0-07d7eb7db01b)
 ![Descripción de la imagen](./public/imgs/readme.png)
